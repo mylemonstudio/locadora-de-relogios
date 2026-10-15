@@ -10,7 +10,28 @@ def mostra_menu() -> None:
     print("  [2] Buscar por codigo")
     print("  [3] Alugar relogio")
     print("  [4] Devolver relogio")
+    print("  [5] Estatisticas")
     print("  [0] Sair")
+
+
+def mostra_estatisticas(estoque) -> None:
+    """Mostra estatisticas do estoque: total, media, mais caro e mais barato."""
+    if len(estoque) == 0:
+        print("Estoque vazio.")
+        return
+
+    total = len(estoque)
+    diarias = [r.diaria for r in estoque.relogios]
+    media = sum(diarias) / total
+    mais_caro = max(estoque.relogios, key=lambda r: r.diaria)
+    mais_barato = min(estoque.relogios, key=lambda r: r.diaria)
+
+    print()
+    print("=== ESTATISTICAS ===")
+    print(f"Total de relogios: {total}")
+    print(f"Diaria media:      R$ {media:.2f}")
+    print(f"Mais caro:         {mais_caro}")
+    print(f"Mais barato:       {mais_barato}")
 
 
 def main() -> None:
@@ -54,6 +75,9 @@ def main() -> None:
             else:
                 relogio.devolver()
                 print(f"Devolvido: {relogio.marca} {relogio.modelo}")
+
+        elif opcao == "5":
+            mostra_estatisticas(estoque)
 
         elif opcao == "0":
             print("Ate logo!")
